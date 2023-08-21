@@ -10,6 +10,7 @@ const Notes = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const { session } = useSession();
+
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -56,7 +57,9 @@ const Notes = () => {
 					))}
 				</ul>
 			)}
-			{!data || (!error && <p className='text-center'>Add some notes</p>)}
+			{data.length === 0 && !error && (
+				<p className='text-center'>Add some notes</p>
+			)}
 			{error && <p className='error-message'>{error}</p>}
 		</div>
 	);
