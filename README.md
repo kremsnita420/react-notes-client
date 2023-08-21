@@ -1,4 +1,6 @@
-# React + Vite
+# React + Vite + MongoDB + Expresss
+
+## React notes app made with React, MongoDB, Express
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
