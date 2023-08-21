@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useSession } from '@clerk/clerk-react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function AddNote() {
@@ -8,6 +9,8 @@ function AddNote() {
 	const [submitted, setSubmitted] = useState(false);
 	const [successMessage, setSuccessMessage] = useState('');
 	const [error, setError] = useState('');
+	const { session } = useSession();
+	const [user, setUser] = useState('');
 	const addNote = async (e) => {
 		e.preventDefault();
 
@@ -18,6 +21,7 @@ function AddNote() {
 				body: JSON.stringify({
 					title,
 					description,
+					userId: user,
 				}),
 			});
 
@@ -38,6 +42,10 @@ function AddNote() {
 			}, 3000);
 		}
 	};
+
+	useEffect(() => {
+		setUser(session.user.id);
+	}, [session.user.id]);
 
 	return (
 		<div>

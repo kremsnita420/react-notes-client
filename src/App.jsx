@@ -6,20 +6,36 @@ import About from './routes/About/About';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
+import {
+	ClerkProvider,
+	SignedIn,
+	SignedOut,
+	RedirectToSignIn,
+} from '@clerk/clerk-react';
+
+if (!import.meta.env.VITE_CLERK_PUBLISHABLE_KEY) {
+	throw 'Missing Publishable Key';
+}
+const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 function App() {
 	return (
-		<>
-			<Router>
-				<Header />
-				<Routes>
-					<Route path='/' element={<Home />} />
-					<Route path='/add-note' element={<AddNote />} />
-					<Route path='/note/:id' element={<UpdateNote />} />
-					<Route path='/about' element={<About />} />
-				</Routes>
-				<Footer />
-			</Router>
-		</>
+		<ClerkProvider publishableKey={clerkPubKey}>
+			<SignedIn>
+				<Router>
+					<Header />
+					<Routes>
+						<Route path='/' element={<Home />} />
+						<Route path='/add-note' element={<AddNote />} />
+						<Route path='/note/:id' element={<UpdateNote />} />
+						<Route path='/about' element={<About />} />
+					</Routes>
+					<Footer />
+				</Router>
+			</SignedIn>
+			<SignedOut>
+				<RedirectToSignIn />
+			</SignedOut>
+		</ClerkProvider>
 	);
 }
 

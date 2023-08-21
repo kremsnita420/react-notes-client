@@ -1,3 +1,4 @@
+import { useSession } from '@clerk/clerk-react';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -8,7 +9,7 @@ const Notes = () => {
 	const [data, setData] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState(null);
-
+	const { session } = useSession();
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -19,7 +20,8 @@ const Notes = () => {
 				}
 
 				const data = await response.json();
-				setData(data);
+				const filteredData = data.filter((d) => d.userId === session.user.id);
+				setData(filteredData);
 				setIsLoading(false);
 			} catch (error) {
 				setError('Error fetching data');
@@ -27,13 +29,13 @@ const Notes = () => {
 			}
 		};
 		fetchData();
-	}, [baseUrl]);
+	}, [baseUrl, session.user.id]);
 
 	return (
 		<div>
 			{/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
 			{isLoading && <h2>Loading...</h2>} {error && <p>{error}</p>}
-			{data ? (
+			{data && (
 				<ul className='notes'>
 					<button className='add-note-button'>
 						<Link to={`/add-note`}>
@@ -43,7 +45,7 @@ const Notes = () => {
 					{data.map((item) => (
 						<li key={item._id}>
 							<Link to={`/note/${item._id}`}>
-								<h3>{item.title}</h3>
+								<h2>{item.title}</h2>
 								<p>
 									{item.description.length > 200
 										? `${item.description.substring(0, 200)}...`
@@ -53,9 +55,9 @@ const Notes = () => {
 						</li>
 					))}
 				</ul>
-			) : (
-				<p className='error-message'>{error}</p>
 			)}
+			{!data || (!error && <p className='text-center'>Add some notes</p>)}
+			{error && <p className='error-message'>{error}</p>}
 		</div>
 	);
 };
