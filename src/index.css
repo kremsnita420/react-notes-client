@@ -1,0 +1,297 @@
+:root {
+	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
+	color: #213547;
+	background-color: #ffffff;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: 100%;
+}
+
+#root {
+	margin-inline: auto;
+	padding: 2rem;
+
+	border-radius: 24px;
+	padding: 24px;
+	background-color: #8cddbd;
+	width: 100%;
+	max-width: 800px;
+	box-sizing: border-box;
+}
+
+/* Inputs */
+input,
+textarea,
+select {
+	width: 100%;
+	height: 30px;
+	margin-bottom: 10px;
+	border: 0;
+	background-color: transparent;
+	cursor: pointer;
+}
+button {
+	cursor: pointer;
+}
+
+input[type='submit'] {
+	margin-top: 20px;
+	background-color: rgb(33, 53, 71);
+	color: #fff;
+	border: 0;
+	height: 40px;
+	margin-bottom: 10px;
+	text-transform: uppercase;
+	border-radius: 10px;
+	transition: background-color 0.3s ease;
+}
+
+input[type='submit']:hover {
+	background-color: rgba(33, 53, 71, 0.5);
+}
+input[disabled] {
+	cursor: not-allowed;
+}
+
+textarea {
+	height: 320px;
+}
+
+table,
+th,
+td {
+	border: 1px solid;
+}
+
+td {
+	padding: 10px;
+}
+
+a {
+	font-weight: 500;
+	color: #007d93;
+	text-decoration: inherit;
+	transition: color 0.3s ease;
+}
+
+a:hover {
+	color: #005564;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+body {
+	margin-inline: auto;
+	min-height: 100vh;
+
+	padding: 1rem;
+}
+
+h1 {
+	font-size: 2.2em;
+	line-height: 1.1;
+}
+
+header {
+	display: flex;
+	justify-content: space-between;
+	gap: 2rem;
+	border-bottom: 1px solid #007d9354;
+	margin-bottom: 2rem;
+	padding-bottom: 1rem;
+}
+
+nav {
+	display: flex;
+	gap: 1.2rem;
+	align-items: center;
+
+	& a.active {
+		color: rgb(165, 4, 4);
+		border-bottom: 1px solid rgb(165, 4, 4);
+	}
+}
+
+footer {
+	border-top: 1px solid #007d9354;
+	text-align: center;
+	padding-top: 1rem;
+	margin-top: 3rem;
+	font-size: 0.8rem;
+}
+
+.logo {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+}
+
+/* Books */
+ul.notes {
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+ul.notes li {
+	background-color: #fcd633;
+	border-radius: 10px;
+	min-height: 250px;
+	transition: background-color 0.3s ease;
+	&:hover {
+		background-color: #a08922;
+	}
+}
+
+@media only screen and (min-width: 600px) {
+	ul.notes {
+		flex-direction: row;
+	}
+	ul.notes li {
+		flex: 1 0 33.333%;
+	}
+}
+
+ul.notes li a {
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	color: #213547;
+	height: 100%;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+ul.notes h3 {
+	font-weight: 400;
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+
+ul.notes p {
+	font-weight: 300;
+	margin: auto 0;
+}
+
+.single-note {
+	background-color: #fcd633;
+	border-radius: 10px;
+	border: 2px solid #fcd633;
+	padding: 20px;
+}
+
+.single-note .title {
+	font-size: 2rem;
+	margin-bottom: 1rem;
+}
+
+.single-note .description {
+	font-size: 1.6rem;
+}
+
+.add-note-button {
+	font-size: 1.5rem;
+	text-align: center;
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	position: relative;
+	border: none;
+	background-color: unset;
+	margin: 1rem 0;
+}
+
+.add-note-button > a {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+	background-color: rgb(46, 141, 46);
+	border-radius: 10px;
+	padding: 10px;
+	transition: background-color 0.3s ease;
+
+	&:hover {
+		background-color: rgba(46, 141, 46, 0.5);
+	}
+}
+
+.add-note-button > a > span {
+	display: block;
+	color: white;
+}
+
+.delete {
+	border: 0;
+	background-color: transparent;
+	border: 1px solid #007d9354;
+	border-radius: 10px;
+	padding: 10px;
+}
+
+.delete,
+.back-button {
+	transition: background-color 0.3s ease;
+	&:hover {
+		background-color: #007d9354;
+	}
+}
+
+.back-button {
+	display: block;
+	width: fit-content;
+	border: 1px solid #007d9354;
+	border-radius: 10px;
+	padding: 10px;
+}
+
+.breadcrump-nav {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 1rem;
+}
+
+.text-center {
+	text-align: center;
+}
+.success-message {
+	color: #00a60e;
+}
+
+.error-message {
+	color: #a60600;
+}
+
+.removed-note {
+	background-color: #00a60e;
+	color: #f1f6f4;
+	border-radius: 10px;
+	padding: 20px;
+	font-size: 1.6rem;
+	text-align: center;
+}
+
+.removed-note span {
+	font-size: 6rem;
+}
+
+.removed-note a {
+	color: #fcd633;
+	display: block;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+}
