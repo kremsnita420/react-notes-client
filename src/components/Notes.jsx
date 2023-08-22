@@ -82,7 +82,9 @@ const Notes = () => {
 								? ' notes notes-1'
 								: filteredList.length === 2
 								? ' notes notes-2'
-								: 'notes notes-3'
+								: filteredList.length === 3
+								? 'notes notes-3'
+								: 'notes notes-4'
 						}`}>
 						{filteredList.map((item) => (
 							<SingleNote key={item._id} item={item} />
