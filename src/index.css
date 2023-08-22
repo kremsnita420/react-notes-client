@@ -13,10 +13,9 @@
 
 #root {
 	margin-inline: auto;
-	padding: 2rem;
-
+	min-height: calc(100vh - 2rem);
+	padding: 1rem;
 	border-radius: 24px;
-	padding: 24px;
 	background-color: #8cddbd;
 	width: 100%;
 	max-width: 800px;
@@ -87,13 +86,6 @@ img {
 	height: auto;
 }
 
-body {
-	margin-inline: auto;
-	min-height: 100vh;
-
-	padding: 1rem;
-}
-
 h1 {
 	font-size: 2.2em;
 	line-height: 1.1;
@@ -135,13 +127,14 @@ footer {
 
 /* Books */
 ul.notes {
-	display: flex;
-	flex-direction: column;
+	display: grid;
+	align-items: center;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 	list-style: none;
 	padding: 0;
 	margin: 0;
 	flex-wrap: wrap;
-	gap: 10px;
+	gap: 20px;
 }
 
 ul.notes li {
@@ -151,15 +144,6 @@ ul.notes li {
 	transition: background-color 0.3s ease;
 	&:hover {
 		background-color: #a08922;
-	}
-}
-
-@media only screen and (min-width: 600px) {
-	ul.notes {
-		flex-direction: row;
-	}
-	ul.notes li {
-		flex: 1 0 33.333%;
 	}
 }
 
@@ -210,7 +194,7 @@ ul.notes p {
 	position: relative;
 	border: none;
 	background-color: unset;
-	margin: 1rem 0;
+	margin: 1rem auto;
 }
 
 .add-note-button > a {
@@ -294,4 +278,17 @@ ul.notes p {
 	display: block;
 	margin-top: 2rem;
 	margin-bottom: 2rem;
+}
+
+.loader {
+	height: 100px;
+	width: 20%;
+	text-align: center;
+	padding: 1em;
+	margin: 0 auto;
+	display: block;
+}
+
+.loader svg {
+	fill: #a60600;
 }

@@ -1,8 +1,7 @@
 import { useSession } from '@clerk/clerk-react';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
-// import Note from './Note';
+import Spinner from './Spinner';
 
 const Notes = () => {
 	const baseUrl = `${import.meta.env.VITE_SERVER_URL}/api/notes`;
@@ -35,27 +34,30 @@ const Notes = () => {
 	return (
 		<div>
 			{/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
-			{isLoading && <h2>Loading...</h2>} {error && <p>{error}</p>}
+			{isLoading && <Spinner />} {error && <p>{error}</p>}
 			{data && (
-				<ul className='notes'>
+				<>
+					{' '}
 					<button className='add-note-button'>
 						<Link to={`/add-note`}>
 							<span>+</span>
 						</Link>
 					</button>
-					{data.map((item) => (
-						<li key={item._id}>
-							<Link to={`/note/${item._id}`}>
-								<h2>{item.title}</h2>
-								<p>
-									{item.description.length > 200
-										? `${item.description.substring(0, 200)}...`
-										: item.description}
-								</p>
-							</Link>
-						</li>
-					))}
-				</ul>
+					<ul className='notes'>
+						{data.map((item) => (
+							<li key={item._id}>
+								<Link to={`/note/${item._id}`}>
+									<h2>{item.title}</h2>
+									<p>
+										{item.description.length > 200
+											? `${item.description.substring(0, 200)}...`
+											: item.description}
+									</p>
+								</Link>
+							</li>
+						))}
+					</ul>
+				</>
 			)}
 			{data.length === 0 && !error && (
 				<p className='text-center'>Add some notes</p>

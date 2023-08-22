@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import Spinner from '../../components/Spinner';
 
 function UpdateNote() {
 	const { id } = useParams();
@@ -91,7 +92,7 @@ function UpdateNote() {
 			</div>
 
 			{isLoading ? (
-				<h2>Loading ....</h2>
+				<Spinner />
 			) : (
 				<form onSubmit={updateNote}>
 					<div className='single-note'>
