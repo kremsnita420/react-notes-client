@@ -76,7 +76,14 @@ const Notes = () => {
 							<option value=''>Please select</option>
 						</select>
 					</div>
-					<ul className='notes'>
+					<ul
+						className={`${
+							filteredList.length === 1
+								? ' notes notes-1'
+								: filteredList.length === 2
+								? ' notes notes-2'
+								: 'notes notes-3'
+						}`}>
 						{filteredList.map((item) => (
 							<SingleNote key={item._id} item={item} />
 						))}

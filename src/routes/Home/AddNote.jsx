@@ -1,6 +1,7 @@
 import { useSession } from '@clerk/clerk-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import FormElement from '../../components/FormElement';
 
 function AddNote() {
 	const baseUrl = `${import.meta.env.VITE_SERVER_URL}/api/notes`;
@@ -50,59 +51,37 @@ function AddNote() {
 		setUser(session.user.id);
 	}, [session.user.id]);
 
+	const handleSetTitle = (e) => {
+		setTitle(e.target.value);
+	};
+
+	const handleSetSubject = (e) => {
+		setSubject(e.target.value);
+	};
+
+	const handleSetDescription = (e) => {
+		setDescription(e.target.value);
+	};
+
 	return (
 		<div>
 			<Link style={{ marginBottom: '16px' }} to='/' className='back-button'>
 				👈 back
 			</Link>
 
-			<form onSubmit={addNote}>
-				<div className='single-note'>
-					<div>
-						<input
-							type='text'
-							value={title}
-							onChange={(e) => setTitle(e.target.value)}
-							placeholder='Title'
-							className='title'
-							required
-						/>
-					</div>
-
-					<div>
-						<input
-							type='text'
-							value={subject}
-							onChange={(e) => setSubject(e.target.value.toLowerCase())}
-							placeholder='Subject(todo, shopping, chore,...)'
-							className='subject'
-						/>
-					</div>
-
-					<div>
-						<textarea
-							value={description}
-							onChange={(e) => setDescription(e.target.value)}
-							placeholder='Description'
-							rows='4'
-							cols='50'
-							className='description'></textarea>
-					</div>
-				</div>
-				<input
-					type='submit'
-					value={submitted ? 'Saving note...' : '💾 Save Note'}
-					disabled={!title}
-				/>
-
-				<p className='text-center'>
-					{successMessage ? (
-						<span className='success-message'>{successMessage}</span>
-					) : (
-						<span className='error-message'>{error}</span>
-					)}
-				</p>
-			</form>
+			<FormElement
+				noteType={addNote}
+				handleSetDescription={handleSetDescription}
+				handleSetTitle={handleSetTitle}
+				handleSetSubject={handleSetSubject}
+				addNote={addNote}
+				successMessage={successMessage}
+				submitted={submitted}
+				error={error}
+				title={title}
+				subject={subject}
+				description={description}
+			/>
 		</div>
 	);
 }

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Spinner from '../../components/Spinner';
+import FormElement from '../../components/FormElement';
 
 function UpdateNote() {
 	const { id } = useParams();
@@ -71,16 +72,30 @@ function UpdateNote() {
 		e.preventDefault();
 
 		try {
-			const response = await fetch(baseUrl, {
-				method: 'DELETE',
-			});
+			if (window.confirm('Do you want do delete this note?')) {
+				const response = await fetch(baseUrl, {
+					method: 'DELETE',
+				});
 
-			if (response.ok) {
-				navigate('/');
+				if (response.ok) {
+					navigate('/');
+				}
 			}
 		} catch (error) {
 			setError(error);
 		}
+	};
+
+	const handleSetTitle = (e) => {
+		setTitle(e.target.value);
+	};
+
+	const handleSetSubject = (e) => {
+		setSubject(e.target.value);
+	};
+
+	const handleSetDescription = (e) => {
+		setDescription(e.target.value);
 	};
 
 	return (
@@ -98,52 +113,18 @@ function UpdateNote() {
 			{isLoading ? (
 				<Spinner />
 			) : (
-				<form onSubmit={updateNote}>
-					<div className='single-note'>
-						<div>
-							<input
-								type='text'
-								value={title}
-								onChange={(e) => setTitle(e.target.value)}
-								placeholder='Title'
-								className='title'
-							/>
-						</div>
-
-						<div>
-							<input
-								type='text'
-								value={subject}
-								onChange={(e) => setSubject(e.target.value.toLowerCase())}
-								placeholder='Subject(todo, shopping, chore,...)'
-								className='single-subject'
-							/>
-						</div>
-
-						<div>
-							<textarea
-								value={description}
-								onChange={(e) => setDescription(e.target.value)}
-								placeholder='Description'
-								rows='4'
-								cols='50'
-								className='description'></textarea>
-						</div>
-					</div>
-					<input
-						type='submit'
-						value={submitted ? 'Saving note...' : '💾 Save Note'}
-						disabled={submitted}
-					/>
-
-					<p className='text-center'>
-						{successMessage ? (
-							<span className='success-message'>{successMessage}</span>
-						) : (
-							<span className='error-message'>{error}</span>
-						)}
-					</p>
-				</form>
+				<FormElement
+					handleSetDescription={handleSetDescription}
+					handleSetTitle={handleSetTitle}
+					handleSetSubject={handleSetSubject}
+					noteType={updateNote}
+					successMessage={successMessage}
+					submitted={submitted}
+					error={error}
+					title={title}
+					subject={subject}
+					description={description}
+				/>
 			)}
 		</div>
 	);

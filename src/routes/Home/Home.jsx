@@ -5,7 +5,7 @@ const Home = () => {
 		<div className='notes-wrapper'>
 			<h1>Handy notes</h1>
 			<p>
-				Add notes fort tasks that need to be finished, or create shopping list,
+				Add notes for tasks that need to be finished, or create shopping list,
 				etc.
 			</p>
 
