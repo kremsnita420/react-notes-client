@@ -1,5 +1,5 @@
 import { useSession } from '@clerk/clerk-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import Spinner from './Spinner';
 
@@ -9,7 +9,12 @@ const Notes = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const { session } = useSession();
-
+	const subjects = data.map((s) => s.subject);
+	const uniqueSubjects = [...new Set(subjects)].sort();
+	const [selectedCategory, setSelectedCategory] = useState();
+	// Avoid duplicate function calls with useMemo
+	var filteredList = useMemo(getFilteredCategory, [selectedCategory, data]);
+	// console.log(uniqueSubjects);
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -19,8 +24,10 @@ const Notes = () => {
 					throw new Error('Failed to fetch data!');
 				}
 
-				const data = await response.json();
-				const filteredData = data.filter((d) => d.userId === session.user.id);
+				const fetchData = await response.json();
+				const filteredData = fetchData.filter(
+					(d) => d.userId === session.user.id
+				);
 				setData(filteredData);
 				setIsLoading(false);
 			} catch (error) {
@@ -31,9 +38,21 @@ const Notes = () => {
 		fetchData();
 	}, [baseUrl, session.user.id]);
 
+	function handleCategoryChange(event) {
+		setSelectedCategory(event.target.value);
+	}
+
+	// Function to get filtered list
+	function getFilteredCategory() {
+		// Avoid filter when selectedCategory is null
+		if (!selectedCategory) {
+			return data;
+		}
+		return data.filter((item) => item.subject === selectedCategory);
+	}
+
 	return (
 		<div>
-			{/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
 			{isLoading && <Spinner />} {error && <p>{error}</p>}
 			{data && (
 				<>
@@ -43,14 +62,32 @@ const Notes = () => {
 							<span>+</span>
 						</Link>
 					</button>
+					<div className='subjects'>
+						<label htmlFor='Filter'>Filter by label</label>
+						<select
+							onChange={handleCategoryChange}
+							className='single-subject'
+							name='subject'
+							id='subject'>
+							{uniqueSubjects.map((subject, i) => (
+								<option value={subject} key={`subject-${i}`}>
+									{subject}
+								</option>
+							))}
+							<option value=''>Please select</option>
+						</select>
+					</div>
 					<ul className='notes'>
-						{data.map((item) => (
+						{filteredList.map((item) => (
 							<li key={item._id}>
 								<Link to={`/note/${item._id}`}>
 									<h2>{item.title}</h2>
+									{item.subject && (
+										<h4 className='single-subject'>{item.subject}</h4>
+									)}
 									<p>
-										{item.description.length > 200
-											? `${item.description.substring(0, 200)}...`
+										{item.description.length > 100
+											? `${item.description.substring(0, 100)}...`
 											: item.description}
 									</p>
 								</Link>

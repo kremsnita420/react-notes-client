@@ -6,11 +6,13 @@ function AddNote() {
 	const baseUrl = `${import.meta.env.VITE_SERVER_URL}/api/notes`;
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
+	const [subject, setSubject] = useState('');
 	const [submitted, setSubmitted] = useState(false);
 	const [successMessage, setSuccessMessage] = useState('');
 	const [error, setError] = useState('');
 	const { session } = useSession();
 	const [user, setUser] = useState('');
+
 	const addNote = async (e) => {
 		e.preventDefault();
 
@@ -22,6 +24,7 @@ function AddNote() {
 					title,
 					description,
 					userId: user,
+					subject,
 				}),
 			});
 
@@ -62,6 +65,17 @@ function AddNote() {
 							onChange={(e) => setTitle(e.target.value)}
 							placeholder='Title'
 							className='title'
+							required
+						/>
+					</div>
+
+					<div>
+						<input
+							type='text'
+							value={subject}
+							onChange={(e) => setSubject(e.target.value.toLowerCase())}
+							placeholder='Subject(todo, shopping, chore,...)'
+							className='subject'
 						/>
 					</div>
 

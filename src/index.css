@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=block');
+
 :root {
 	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 	line-height: 1.5;
@@ -20,6 +22,9 @@
 	width: 100%;
 	max-width: 800px;
 	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
 }
 
 /* Inputs */
@@ -115,7 +120,7 @@ footer {
 	border-top: 1px solid #007d9354;
 	text-align: center;
 	padding-top: 1rem;
-	margin-top: 3rem;
+	margin-top: auto;
 	font-size: 0.8rem;
 }
 
@@ -125,6 +130,41 @@ footer {
 	gap: 0.6rem;
 }
 
+.notes-wrapper {
+	margin-bottom: auto;
+	width: 100%;
+}
+
+.subjects {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 20px 0;
+}
+
+.single-subject {
+	font-weight: 400;
+	border: 1px solid;
+	width: fit-content;
+	padding: 0 10px;
+	border-radius: 10rem;
+}
+
+.subjects .single-subject {
+	margin: 0 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+
+	&:hover {
+		background-color: #007d9354;
+	}
+}
+
+.subjects label {
+	margin-bottom: 10px;
+}
 /* Books */
 ul.notes {
 	display: grid;
@@ -132,15 +172,15 @@ ul.notes {
 	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 	list-style: none;
 	padding: 0;
-	margin: 0;
-	flex-wrap: wrap;
 	gap: 20px;
+	margin-bottom: 2rem;
 }
 
 ul.notes li {
 	background-color: #fcd633;
 	border-radius: 10px;
 	min-height: 250px;
+	height: 100%;
 	transition: background-color 0.3s ease;
 	&:hover {
 		background-color: #a08922;
@@ -157,15 +197,21 @@ ul.notes li a {
 	box-sizing: border-box;
 }
 
-ul.notes h3 {
+ul.notes h2 {
 	font-weight: 400;
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+
+ul.notes .single-subject {
 	margin-top: 0;
 	margin-bottom: 10px;
 }
 
 ul.notes p {
 	font-weight: 300;
-	margin: auto 0;
+	letter-spacing: 1px;
+	font-family: 'Shadows Into Light', cursive;
 }
 
 .single-note {
@@ -180,6 +226,12 @@ ul.notes p {
 	margin-bottom: 1rem;
 }
 
+.single-note .single-subject {
+	font-size: 1rem;
+	margin-bottom: 1rem;
+
+	display: block;
+}
 .single-note .description {
 	font-size: 1.6rem;
 }

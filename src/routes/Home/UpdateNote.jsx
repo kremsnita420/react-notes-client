@@ -8,6 +8,7 @@ function UpdateNote() {
 	const baseUrl = `${import.meta.env.VITE_SERVER_URL}/api/notes/${id}`;
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
+	const [subject, setSubject] = useState('');
 	const [submitted, setSubmitted] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 	const [successMessage, setSuccessMessage] = useState(null);
@@ -24,6 +25,7 @@ function UpdateNote() {
 
 				const data = await response.json();
 				setTitle(data.title);
+				setSubject(data.subject);
 				setDescription(data.description);
 			} catch (error) {
 				setError('Error updating note. Please try again later.');
@@ -44,6 +46,7 @@ function UpdateNote() {
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					title,
+					subject,
 					description,
 				}),
 			});
@@ -55,6 +58,7 @@ function UpdateNote() {
 					setSuccessMessage(null);
 				}, 3000);
 				setSubmitted(false);
+				navigate('/');
 			} else {
 				console.log('Failed to submit data.');
 			}
@@ -103,6 +107,16 @@ function UpdateNote() {
 								onChange={(e) => setTitle(e.target.value)}
 								placeholder='Title'
 								className='title'
+							/>
+						</div>
+
+						<div>
+							<input
+								type='text'
+								value={subject}
+								onChange={(e) => setSubject(e.target.value.toLowerCase())}
+								placeholder='Subject(todo, shopping, chore,...)'
+								className='single-subject'
 							/>
 						</div>
 
