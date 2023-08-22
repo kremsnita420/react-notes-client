@@ -2,6 +2,7 @@ import { useSession } from '@clerk/clerk-react';
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import Spinner from './Spinner';
+import SingleNote from './SingleNote';
 
 const Notes = () => {
 	const baseUrl = `${import.meta.env.VITE_SERVER_URL}/api/notes`;
@@ -13,8 +14,7 @@ const Notes = () => {
 	const uniqueSubjects = [...new Set(subjects)].sort();
 	const [selectedCategory, setSelectedCategory] = useState();
 	// Avoid duplicate function calls with useMemo
-	var filteredList = useMemo(getFilteredCategory, [selectedCategory, data]);
-	// console.log(uniqueSubjects);
+	let filteredList = useMemo(getFilteredCategory, [selectedCategory, data]);
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -56,7 +56,6 @@ const Notes = () => {
 			{isLoading && <Spinner />} {error && <p>{error}</p>}
 			{data && (
 				<>
-					{' '}
 					<button className='add-note-button'>
 						<Link to={`/add-note`}>
 							<span>+</span>
@@ -79,19 +78,7 @@ const Notes = () => {
 					</div>
 					<ul className='notes'>
 						{filteredList.map((item) => (
-							<li key={item._id}>
-								<Link to={`/note/${item._id}`}>
-									<h2>{item.title}</h2>
-									{item.subject && (
-										<h4 className='single-subject'>{item.subject}</h4>
-									)}
-									<p>
-										{item.description.length > 100
-											? `${item.description.substring(0, 100)}...`
-											: item.description}
-									</p>
-								</Link>
-							</li>
+							<SingleNote key={item._id} item={item} />
 						))}
 					</ul>
 				</>
